@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import { RepoTable } from './components/repoTable.jsx';
 
 export function App() {
   const [API, setAPI] = useState<any[]>([]);
@@ -13,8 +15,9 @@ export function App() {
 
   return (
     <div className="App">
-      <h1>Repos</h1>
-      <h2>{API}</h2>
+      <Routes>
+        <Route path="/" element={<RepoTable repoAPI={API} />} />
+      </Routes>
     </div>
   );
 }
