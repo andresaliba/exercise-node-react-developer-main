@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 export const COLUMNS = [
   {
     Header: 'Name',
     accessor: 'name',
+    Cell: (e) => <Link to={e.value}> {e.value} </Link>,
   },
   {
     Header: 'Description',
