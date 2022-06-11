@@ -1,21 +1,35 @@
 import { useMemo } from 'react';
-import { useTable } from 'react-table';
+import { useTable, useGlobalFilter } from 'react-table';
 import { COLUMNS } from './columns';
+import GlobalFilter from './globalFilter';
 
 export const RepoTable = ({ repoAPI }) => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => repoAPI, [repoAPI]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    {
       columns,
       data,
-    });
+    },
+    useGlobalFilter
+  );
+
+  const { globalFilter } = state;
 
   return (
     <>
       {/* eslint-disable react/jsx-key */}
       {/* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe me. */}
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
