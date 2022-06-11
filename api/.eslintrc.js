@@ -20,6 +20,12 @@ module.exports = {
   },
 
   rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+    ],
     'array-callback-return': 'error',
     'constructor-super': 'error',
     curly: 'error',
