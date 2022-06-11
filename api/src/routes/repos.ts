@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 export const repos = Router();
 
 repos.get('/', async (_: Request, res: Response) => {
-  res.header('Cache-Control', 'no-store');
+  // res.header('Cache-Control', 'no-store');
   res.header('access-control-allow-origin', '*');
   res.status(200);
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
@@ -14,7 +14,7 @@ repos.get('/', async (_: Request, res: Response) => {
     // URL for API
     const gitURL = 'https://api.github.com/users/silverorange/repos';
     // Fetching data from API
-    const gitFetch = await fetch(gitURL)
+    const gitFetch = await fetch(gitURL);
     const gitData = await gitFetch.json();
     // combining JSON data
     const combinedData = gitData.concat(localAPI);
@@ -28,5 +28,5 @@ repos.get('/', async (_: Request, res: Response) => {
     res.send(sortedData);
   } catch (error) {
     console.log(error);
-  }  
+  }
 });
