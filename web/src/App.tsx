@@ -7,11 +7,23 @@ import Repository from './components/repository.jsx';
 export function App() {
   const [API, setAPI] = useState<any[]>([]);
 
+  // TODO: Erorr handling middleware
+  // Doesn't work?
+  const handleError = (response) => {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  };
+
   useEffect(() => {
     fetch('http://localhost:4000/repos')
+      .then(handleError)
       .then((res) => res.json())
       .then((data) => setAPI(data))
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.error('There was an error fetching from localhost repo', error);
+      });
   }, []);
 
   return (

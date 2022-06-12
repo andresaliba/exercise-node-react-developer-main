@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const Repository = () => {
   // get repository name from url param
@@ -11,52 +13,50 @@ const Repository = () => {
   const [commitDate, setCommitDate] = useState('');
   const [commitAuthor, setCommitAuthor] = useState('');
   const [commitMessage, setCommitMessage] = useState('');
+  const [commitREADME, setCommitREADME] = useState(null);
 
   // access token for API calls limit to 60 requests per hour
-  const access_token = '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';
+  //   const access_token = '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';
 
   // fetch the data from the API using Axios
   const fetchData = async () => {
     try {
       await axios(
-        `https://api.github.com/repos/silverorange/${id}/branches/master`,
-        {
-          headers: {
-            Authorization: `token ${access_token}`,
-          },
-        }
+        `https://api.github.com/repos/silverorange/${id}/branches/master`
       )
         .then((res) => {
+          // no data in response
+          if (res.data.length === 0) {
+            console.log('no data from Axios fetch');
+          }
           // Set the data to the repoAPI state
           setRepoAPI(res.data);
           console.log(res.data);
         })
         .catch((err) => {
-          // TODO: handle middleware error
-          // is this working?
-          if (
-            err.response.status === 403 ||
-            err.response.status === 404 ||
-            err.response.status === 400
-          ) {
-            return (
-              <div>
-                <h1>Error</h1>
-                <p>No Repositories Found</p>
-              </div>
-            );
-          }
-          console.error('Axios - Error fetching repository data: ', err);
-          console.error('Status:', err.response.status);
+          console.error(err);
         });
     } catch (error) {
       console.error('Try/Catch error fetching API data: ', error);
     }
   };
 
+  const getREADME = async () => {
+    try {
+      await axios(
+        `https://raw.githubusercontent.com/silverorange/${id}/master/README.md`
+      ).then((res) => {
+        setCommitREADME(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // fetch data on component mount
   useEffect(() => {
     fetchData();
+    getREADME();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -115,6 +115,15 @@ const Repository = () => {
         <div>
           <h3>Commit Message</h3>
           {commitMessage}
+        </div>
+        <div>
+          <hr />
+          <h1>Read Me 🔽</h1>
+          {commitREADME ? (
+            <ReactMarkdown children={commitREADME} remarkPlugins={[gfm]} />
+          ) : (
+            <p>This repository has no README file</p>
+          )}
         </div>
       </div>
     </>
