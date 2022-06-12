@@ -4,9 +4,11 @@ import { COLUMNS } from './columns';
 import GlobalFilter from './globalFilter';
 
 export const RepoTable = ({ repoAPI }) => {
+  // using the useTable hook to create a table
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => repoAPI, [repoAPI]);
 
+  // table properties
   const {
     getTableProps,
     getTableBodyProps,
@@ -23,6 +25,7 @@ export const RepoTable = ({ repoAPI }) => {
     useGlobalFilter
   );
 
+  // table filtering
   const { globalFilter } = state;
 
   return (

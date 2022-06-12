@@ -16,6 +16,7 @@ export function App() {
     return response;
   };
 
+  // fetch local API data, set to API state
   useEffect(() => {
     fetch('http://localhost:4000/repos')
       .then(handleError)

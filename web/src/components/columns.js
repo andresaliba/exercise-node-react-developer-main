@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+// column definitions to use on react-table
 export const COLUMNS = [
   {
     Header: 'Name',

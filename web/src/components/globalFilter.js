@@ -1,3 +1,4 @@
+// global filter component for react-table
 export const GlobalFilter = ({ filter, setFilter }) => {
   return (
     <span>
