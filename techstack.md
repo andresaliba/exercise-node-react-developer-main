@@ -52,7 +52,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [andresaliba/exercise-node-react-developer-main](https://github.com/andresaliba/exercise-node-react-developer-main)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|46<br/>Tools used|01/04/24 <br/>Report generated|
+|46<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
